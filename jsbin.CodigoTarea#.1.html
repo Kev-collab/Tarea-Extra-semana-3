@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2025 by anonymous (http://jsbin.com/poxidigiqe/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+
+<script id="jsbin-javascript">
+// Variables útiles 
+var precio_base = 2000;
+
+// Valores de los recargos
+var edad_18 = 0.1; // 10%
+var edad_25 = 0.2; // 20%
+var edad_50 = 0.3; // 30%
+
+var casado_18 = 0.1; // 10%
+var casado_25 = 0.2; // 20%
+var casado_50 = 0.3; // 30%
+
+var hijos_recargo = 0.2; // 20%
+var propiedad_recargo = 0.35; // 35%
+var salario_recargo = 0.05; // 5%
+
+while (true) {
+  // Solicitar nombre
+  var nombre = prompt("Ingrese su nombre (o escriba 'SALIR' para terminar)").toUpperCase();
+  if (nombre === "SALIR") break;
+
+  // Solicitar edad del asegurado
+  var edad = prompt("¿Cuántos años tiene? Ingrese solamente números");
+  var edad_numero = parseInt(edad);
+
+  // Preguntar si está casado
+  var casado = prompt("¿Está casado actualmente? (si/no)").toUpperCase();
+  var edad_conyuge_numero = 0;
+
+  if (casado === "SI") {
+    var edad_conyuge = prompt("¿Qué edad tiene su esposo/a?");
+    edad_conyuge_numero = parseInt(edad_conyuge);
+  }
+
+  // Preguntar si tiene hijos
+  var hijos = prompt("¿Tiene hijos o hijas? (si/no)").toUpperCase();
+  var cantidad_hijos = 0;
+
+  if (hijos === "SI") {
+    cantidad_hijos = parseInt(prompt("¿Cuántos hijos tiene? Ingrese solamente números"));
+  }
+
+  // Preguntar cantidad de propiedades
+  var cantidad_propiedades = parseInt(prompt("¿Cuántas propiedades tiene? Ingrese solamente números"));
+
+  // Preguntar salario mensual
+  var salario = parseFloat(prompt("¿Cuál es su salario mensual? Ingrese solamente números"));
+
+  // Inicializar recargos
+  var recargo_total = 0;
+  var recargo = 0;
+
+  // Calcular recargo por edad del asegurado
+  if (edad_numero >= 18 && edad_numero < 25) {
+    recargo = precio_base * edad_18;
+  } else if (edad_numero >= 25 && edad_numero < 50) {
+    recargo = precio_base * edad_25;
+  } else if (edad_numero >= 50) {
+    recargo = precio_base * edad_50;
+  }
+  recargo_total += recargo;
+
+  // Calcular recargo por edad del cónyuge (si aplica)
+  if (casado === "SI") {
+    if (edad_conyuge_numero >= 18 && edad_conyuge_numero < 25) {
+      recargo = precio_base * casado_18;
+    } else if (edad_conyuge_numero >= 25 && edad_conyuge_numero < 50) {
+      recargo = precio_base * casado_25;
+    } else if (edad_conyuge_numero >= 50) {
+      recargo = precio_base * casado_50;
+    }
+    recargo_total += recargo;
+  }
+
+  // Calcular recargo por cantidad de hijos
+  if (cantidad_hijos > 0) {
+    recargo = precio_base * hijos_recargo * cantidad_hijos;
+    recargo_total += recargo;
+  }
+
+  // Calcular recargo por propiedades
+  if (cantidad_propiedades > 0) {
+    recargo = precio_base * propiedad_recargo * cantidad_propiedades;
+    recargo_total += recargo;
+  }
+
+  // Calcular recargo por salario
+  recargo = salario * salario_recargo;
+  recargo_total += recargo;
+
+  // Calcular precio final
+  var precio_final = precio_base + recargo_total;
+
+  // Mostrar resultados
+  alert("Para el asegurado " + nombre);
+  alert("El recargo total será de: Q" + recargo_total.toFixed(2));
+  alert("El precio final será de: Q" + precio_final.toFixed(2));
+}
+
+alert("Gracias por usar el sistema de cotización.");
+
+
+
+</script>
+</body>
+</html>
